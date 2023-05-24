@@ -69,7 +69,7 @@ pipeline {
                             sshPut remote: remote, from: 'get_soft.py', into: "/srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + "/get_soft.py"
                             sshCommand remote: remote, command: "sudo docker exec saltstack python3 /srv/salt/jenkins_temp/" + JOB_NAME + \
                             "/get_soft.py -b -s " + SYNDIC
-                            sshGet remote: remote, from: "/srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + "/" + SYNDIC + ".json", into: "./" + SYNDIC + ".json", override: true
+                            sshGet remote: remote, from: "/srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + "/softs_" + SYNDIC + ".json", into: "./softs_" + SYNDIC + ".json", override: true
 
                             // sh "python3.9 mysql_addon.py ${SYNDIC}.json"
 
@@ -84,7 +84,7 @@ pipeline {
                             sshPut remote: remote, from: 'get_soft.py', into: "/tmp/" + JOB_NAME + "/get_soft.py"
                             sshCommand remote: remote, command: "sudo /usr/bin/python3 /tmp/" + JOB_NAME + \
                             "/get_soft.py -b -s " + SYNDIC
-                            sshGet remote: remote, from: "/tmp/" + JOB_NAME + "/" + SYNDIC + ".json", into: "./" + SYNDIC + ".json", override: true
+                            sshGet remote: remote, from: "/tmp/" + JOB_NAME + "/softs_" + SYNDIC + ".json", into: "./softs_" + SYNDIC + ".json", override: true
 
                             // sh "python3.9 mysql_addon.py ${SYNDIC}.json"
                         }
