@@ -1,7 +1,7 @@
 // DOC: https://plugins.jenkins.io/ssh-steps/#plugin-content-remote
 
 def syndics = [
-    'TMM' : ['192.168.29.30', 22, 'OUT'],
+    'DEV' : ['192.168.29.30', 22, 'OUT'],
     'XTK' : ['192.168.29.40', 22, 'XTK'],
 ]
 
@@ -18,7 +18,7 @@ pipeline {
                         if (env.SALT_SOFTS_DEBUG.toLowerCase() == 'true') {
                             print "|---> Rodando em modo de Desenvolvimento <---|"
                             syndics = [
-                                'UBU' : ['192.168.29.30', 19999, 'OUT'],
+                                'DEV' : ['192.168.29.30', 19999, 'OUT'],
                                 'XTK' : ['192.168.29.40', 22, 'XTK'],
                             ]
                         }
