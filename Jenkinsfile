@@ -62,9 +62,10 @@ pipeline {
                             print "| ------------> Using  XTK <------------- |"
                             sh "rm -f ${SYNDIC}.json ${SYNDIC}_update.json"
                             print "| --> The old files have been removed <-- |"
-                            sshCommand remote: remote, command: "sudo mkdir -p /srv/salt/srv/salt/jenkins_temp/" + JOB_NAME
+                            // New part - Script base create
+                            sshPut remote: remote, from: 'gs_check.py', into: "/tmp/gs_check.py"
+                            sshCommand remote: remote, command: "sudo python3 /tmp/gs_check.py /srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + " svc.jenkins.local 755"
                             // Ajustando permissao do svc.jenkins.local
-                            sshCommand remote: remote, command: "sudo chown svc.jenkins.local:svc.jenkins.local /srv/salt/srv/salt/jenkins_temp/" + JOB_NAME
                             sshPut remote: remote, from: 'get_soft.py', into: "/srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + "/get_soft.py"
                             sshCommand remote: remote, command: "sudo docker exec saltstack python3 /srv/salt/jenkins_temp/" + JOB_NAME + \
                             "/get_soft.py -b -s " + SYNDIC
@@ -76,9 +77,10 @@ pipeline {
                             print "| ------------> Using SALT <------------- |"
                             sh "rm -f ${SYNDIC}.json ${SYNDIC}_update.json"
                             print "| --> The old files have been removed <-- |"
-                            sshCommand remote: remote, command: "sudo mkdir -p /tmp/" + JOB_NAME
+                            // New part - Script base create
+                            sshPut remote: remote, from: 'gs_check.py', into: "/tmp/gs_check.py"
+                            sshCommand remote: remote, command: "sudo python3 /tmp/gs_check.py /tmp/" + JOB_NAME + " svc.jenkins.local 755"
                             // Ajustando permissao do svc.jenkins.local
-                            sshCommand remote: remote, command: "sudo chown svc.jenkins.local:svc.jenkins.local /tmp/" + JOB_NAME
                             sshPut remote: remote, from: 'get_soft.py', into: "/tmp/" + JOB_NAME + "/get_soft.py"
                             sshCommand remote: remote, command: "sudo /usr/bin/python3 /tmp/" + JOB_NAME + \
                             "/get_soft.py -b -s " + SYNDIC
