@@ -52,3 +52,5 @@ if __name__ == '__main__':
     output_file = open('{}/softs_{}.json'.format(si.fullpath, args['syndic']), 'w')
     output_file.write(json.dumps(res))
     output_file.close()
+
+# python3 get_soft.py -b -s TM
