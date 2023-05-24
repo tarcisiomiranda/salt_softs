@@ -81,7 +81,7 @@ pipeline {
                             sshCommand remote: remote, command: "sudo chown svc.jenkins.local:svc.jenkins.local /tmp/" + JOB_NAME
                             sshPut remote: remote, from: 'get_soft.py', into: "/tmp/" + JOB_NAME + "/get_soft.py"
                             sshCommand remote: remote, command: "sudo /usr/bin/python3 /tmp/" + JOB_NAME + \
-                            "/get_soft.py --get-hotfix > /tmp/" + JOB_NAME + "/" + SYNDIC + ".json"
+                            "/get_soft.py -b -s " + SYNDIC
                             sshGet remote: remote, from: "/tmp/" + JOB_NAME + "/" + SYNDIC + ".json", into: "./" + SYNDIC + ".json", override: true
 
                             // sh "python3.9 mysql_addon.py ${SYNDIC}.json"
