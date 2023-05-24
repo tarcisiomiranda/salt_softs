@@ -18,7 +18,7 @@ pipeline {
                         if (env.SALT_SOFTS_DEBUG.toLowerCase() == 'true') {
                             print "|---> Rodando em modo de Desenvolvimento <---|"
                             syndics = [
-                                'DEV' : ['192.168.29.30', 19999, 'OUT'],
+                                'UBU' : ['192.168.29.30', 19999, 'OUT'],
                                 'XTK' : ['192.168.29.40', 22, 'XTK'],
                             ]
                         }
