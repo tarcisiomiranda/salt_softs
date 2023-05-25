@@ -60,7 +60,7 @@ pipeline {
 
                         if (IPV4[2].toLowerCase() == 'xtk') {
                             print "| ------------> Using  XTK <------------- |"
-                            sh "rm -f ${SYNDIC}.json ${SYNDIC}_update.json"
+                            sh "rm -f softs_${SYNDIC}.json"
                             print "| --> The old files have been removed <-- |"
                             // New part - Script base create
                             sshPut remote: remote, from: 'gs_check.py', into: "/tmp/gs_check.py"
@@ -71,11 +71,11 @@ pipeline {
                             "/get_soft.py -b -s " + SYNDIC
                             sshGet remote: remote, from: "/srv/salt/srv/salt/jenkins_temp/" + JOB_NAME + "/softs_" + SYNDIC + ".json", into: "./softs_" + SYNDIC + ".json", override: true
 
-                            // sh "python3.9 mysql_addon.py ${SYNDIC}.json"
+                            sh "python3.9 mysql_addon.py softs_${SYNDIC}.json"
 
                         } else {
                             print "| ------------> Using SALT <------------- |"
-                            sh "rm -f ${SYNDIC}.json ${SYNDIC}_update.json"
+                            sh "rm -f softs_${SYNDIC}.json"
                             print "| --> The old files have been removed <-- |"
                             // New part - Script base create
                             sshPut remote: remote, from: 'gs_check.py', into: "/tmp/gs_check.py"
@@ -86,7 +86,7 @@ pipeline {
                             "/get_soft.py -b -s " + SYNDIC
                             sshGet remote: remote, from: "/tmp/" + JOB_NAME + "/softs_" + SYNDIC + ".json", into: "./softs_" + SYNDIC + ".json", override: true
 
-                            // sh "python3.9 mysql_addon.py ${SYNDIC}.json"
+                            sh "python3.9 mysql_addon.py softs_${SYNDIC}.json"
                         }
                     }
                 }

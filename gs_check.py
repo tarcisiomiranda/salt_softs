@@ -13,7 +13,7 @@ def set_folder(folder, user, chmod):
     os.chown(folder, uid_user, -1)
     os.chmod(folder, chmod)
 
-    print('Pasta criada com permissão para: {}'.format(user))
+    print('\n', 'Pasta criada com permissão para: {}'.format(user), '\n')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Criar pasta com permissão")

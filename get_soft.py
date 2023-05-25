@@ -20,10 +20,10 @@ class SaltInventory:
 
     def __init__(self, args):
         self.salt = salt.client.LocalClient()
-        self.time_to_wait = os.getenv('TIMEOUT_SALT', 120)
+        self.time_to_wait = int(os.getenv('TIMEOUT_SALT', 120))
         self.get_softs = args['get_softs']
         self.fullpath = os.path.abspath(os.path.dirname(__file__))
-        print('Aguarde: {} segundos...', self.time_to_wait)
+        print('Aguarde: {} segundos...'.format(self.time_to_wait))
 
     def get_packages(self):
         '''
@@ -31,7 +31,7 @@ class SaltInventory:
         '''
         try:
             if self.get_softs:
-                jid = self.salt.cmd_async('*', ['pkg.list_pkgs'], [[]])
+                jid = self.salt.cmd_async('*', ['grains.item','pkg.list_pkgs'], [['kernel','osfinger','host'],[]])
             time.sleep(self.time_to_wait)
             data = self.salt.get_cache_returns(jid)
             return {
@@ -42,10 +42,9 @@ class SaltInventory:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Perform a Salt Minion innventory')
-    parser.add_argument('-b','--get-softs',action='store_true',
-                        help='Includes get_softs')
-    parser.add_argument('-s','--syndic', 
-                        help='Pass the syndic ID' )
+    parser.add_argument('-b','--get-softs',action='store_true', help='Includes get_softs')
+    parser.add_argument('-s','--syndic', help='Pass the syndic ID' )
+    # Parser
     args = vars(parser.parse_args())
     si = SaltInventory(args)
     res = si.get_packages()
